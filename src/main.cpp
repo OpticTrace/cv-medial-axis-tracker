@@ -6,7 +6,7 @@ int main() {
     std::string path = "data/test_wound.png";
     cv::Mat img = cv::imread(path);
 
-    if (img.isEmpty()) {
+    if (img.empty()) {
         std::cout << "an error occured. check the path: " << path << "\n";
         return -1;
     }
