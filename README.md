@@ -1,33 +1,47 @@
 # CV Medial Axis Tracker
 
 A C++ Computer Vision module designed for a laser-assisted suturing training system. 
-This repository focuses purely on the image processing and mathematical logic required to find the wound edges, calculate the medial axis (centerline), and extract equidistant target points for a laser guidance system.
+The goal of this module is to process a camera feed of a wound (on felt), find the centerline (medial axis), and output the coordinates for the next suture points to a laser guidance system.
 
-## Roadmap & Progress
+## Current Status (What is done)
+- [x] C++ project configured with CMake and OpenCV (`opencv-contrib`).
+- [x] Load and process static test images.
+- [ ] Binarization and image thresholding.
+- [ ] Medial axis extraction using Zhang-Suen thinning algorithm.
+- [ ] Point ordering and sampling algorithm with a custom step distance.
+- [ ] Visualization of the skeleton and target points via OpenCV GUI.
 
-### Phase 1: Environment & Setup
-- [ ] Initialize C++ project with CMake.
-- [ ] Configure OpenCV (including `opencv_contrib` for thinning).
-- [ ] Load and display a static test image (felt with a slit).
+## Roadmap (What's next)
+- [ ] Implement Gaussian Blur / Adaptive Threshold to handle noisy camera feeds (shadows, felt texture).
+- [ ] Export target coordinates `(X, Y)` to a JSON file or Serial Port for Arduino.
+- [ ] Test the algorithm on a live video feed.
+- [ ] Integrate with the physical servo/laser hardware.
 
-### Phase 2: Wound Masking & Edge Detection
-- [ ] Implement image pre-processing (grayscale, blur).
-- [ ] Apply thresholding/binarization to isolate the wound area.
-- [ ] Clean up noise using morphological operations (optional).
+## Tech Stack & Build Instructions
+- **Language:** C++ (C++17 recommended)
+- **Libraries:** OpenCV 4.x, `opencv-contrib` (requires `ximgproc` module)
+- **Build System:** CMake
+- **Environment:** Ubuntu (tested on WSL2)
 
-### Phase 3: Core Math - Medial Axis Extraction
-- [ ] Apply Distance Transform (`cv::distanceTransform`) to calculate the distance of each pixel to the nearest edge.
-- [ ] Extract the 1-pixel centerline using Skeletonization/Thinning (`cv::ximgproc::thinning`).
-- [ ] Visualize the resulting medial axis on top of the original image.
+### How to build:
+```bash
+mkdir build && cd build
+cmake ..
+make
+```
 
-### Phase 4: Path Ordering & Point Sampling
-- [ ] Extract centerline pixels into a `std::vector<cv::Point>`.
-- [ ] Sort the points into a continuous sequential path (from start to end of the wound).
-- [ ] Implement a sampling algorithm to place target points along the path at an equal step distance (e.g., every N pixels).
+### How to run:
+```bash
+cd ..
+./build/MedialAxisTracker
+```
 
-### Phase 5: Output & Visualization
-- [ ] Draw the final target points on the output image.
-- [ ] Export the target coordinates `(X, Y)` to a text/JSON file for further use by the hardware team.
+## Implementation Details
+The core algorithm works as follows:
+1. **Preprocessing:** Convert image to grayscale and apply inverse binary thresholding to isolate the wound area.
+2. **Skeletonization:** Apply `cv::ximgproc::thinning` (Zhang-Suen algorithm) to compress the wound mask into a 1-pixel line.
+3. **Point Extraction & Sorting:** Extract all white pixels into a `std::vector<cv::Point2f>`. Sort them lexicographically to form a continuous path from start to end.
+4. **Sampling:** Iterate through the sorted points and calculate the Euclidean distance (`cv::norm`). Save a point to the final array once the distance from the last saved point exceeds the `stepDistance`.
 
 ---
-*Developed as part of a university mentoring project for a school robotics team.*
+*Developed as part of a university mentoring project.*
