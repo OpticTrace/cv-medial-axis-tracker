@@ -9,7 +9,7 @@ The goal of this module is to process a camera feed of a wound (on felt), find t
 - [x] Binarization and image thresholding.
 - [x] Medial axis extraction using Zhang-Suen thinning algorithm.
 - [x] Point ordering and sampling algorithm with a custom step distance.
-- [ ] Visualization of the skeleton and target points via OpenCV GUI.
+- [x] Visualization of the skeleton and target points via OpenCV GUI.
 
 ## Roadmap (What's next)
 - [ ] Implement Gaussian Blur / Adaptive Threshold to handle noisy camera feeds (shadows, felt texture).
