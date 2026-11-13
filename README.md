@@ -6,9 +6,9 @@ The goal of this module is to process a camera feed of a wound (on felt), find t
 ## Current Status (What is done)
 - [x] C++ project configured with CMake and OpenCV (`opencv-contrib`).
 - [x] Load and process static test images.
-- [ ] Binarization and image thresholding.
-- [ ] Medial axis extraction using Zhang-Suen thinning algorithm.
-- [ ] Point ordering and sampling algorithm with a custom step distance.
+- [x] Binarization and image thresholding.
+- [x] Medial axis extraction using Zhang-Suen thinning algorithm.
+- [x] Point ordering and sampling algorithm with a custom step distance.
 - [ ] Visualization of the skeleton and target points via OpenCV GUI.
 
 ## Roadmap (What's next)
