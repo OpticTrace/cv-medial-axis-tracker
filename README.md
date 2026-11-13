@@ -3,6 +3,8 @@
 A C++ Computer Vision module designed for a laser-assisted suturing training system. 
 The goal of this module is to process a camera feed of a wound (on felt), find the centerline (medial axis), and output the coordinates for the next suture points to a laser guidance system.
 
+![](docs/image.png)
+
 ## Current Status (What is done)
 - [x] C++ project configured with CMake and OpenCV (`opencv-contrib`).
 - [x] Load and process static test images.
